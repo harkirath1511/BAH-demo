@@ -1,38 +1,91 @@
-// import React from "react";
-// import demo3D from "../assets/demo-3d.gif"; // Or use an .mp4 preview
+import React, { useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
+import * as GeoTIFF from "geotiff";
 
-// const Visualize = () => {
-//   return (
-//     <div className="min-h-screen bg-gray-950 text-white px-6 py-10 flex flex-col items-center">
-//       <h2 className="text-3xl font-bold mb-6 text-center">
-//         3D DEM Visualization
-//       </h2>
+const TerrainMesh = ({ elevation }) => {
+  const width = 256;
+  const height = 256;
+  const geometry = new THREE.PlaneGeometry(30, 30, width - 1, height - 1);
 
-//       <div className="flex flex-col md:flex-row gap-10 max-w-6xl w-full">
-//         {/* Left: 3D Visual */}
-//         <div className="w-full md:w-2/3 bg-gray-900 p-4 rounded-lg shadow-lg border border-gray-700 flex justify-center items-center">
-//           <img
-//             src={demo3D}
-//             alt="3D Terrain Demo"
-//             className="rounded max-h-[400px] object-contain"
-//           />
-//         </div>
+  // ✅ Apply elevation first
+  for (let i = 0; i < geometry.attributes.position.count; i++) {
+    geometry.attributes.position.setZ(i, elevation[i]);
+  }
 
-//         {/* Right: Metadata Panel */}
-//         <div className="w-full md:w-1/3 bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700">
-//           <h3 className="text-xl font-semibold mb-4">Metadata</h3>
-//           <ul className="space-y-3 text-sm text-gray-300">
-//             <li><strong>Location:</strong> Copernicus Crater</li>
-//             <li><strong>Azimuth:</strong> 137°</li>
-//             <li><strong>Sun Elevation:</strong> 42°</li>
-//             <li><strong>Generated via:</strong> ASP + SfS</li>
-//             <li><strong>Resolution:</strong> 10 m/pixel</li>
-//             <li><strong>Timestamp:</strong> 2025-07-03 13:00 UTC</li>
-//           </ul>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+  // ✅ Then calculate color based on the final Z values
+  const colors = [];
+  for (let i = 0; i < geometry.attributes.position.count; i++) {
+    const z = geometry.attributes.position.getZ(i);
+    const color = new THREE.Color();
+    color.setHSL(THREE.MathUtils.clamp(z / 50, 0, 1), 1.0, 0.5);
+    colors.push(color.r, color.g, color.b);
+  }
 
-// export default Visualize;
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.computeVertexNormals();
+
+  return (
+    <mesh
+      rotation={[-Math.PI / 2, 0, 0]}
+      geometry={geometry}
+      castShadow
+      receiveShadow
+    >
+      <meshStandardMaterial
+        vertexColors={true}
+        flatShading={true}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+};
+
+const Visualize = () => {
+  const [elevationData, setElevationData] = useState(null);
+
+  useEffect(() => {
+    const loadDEM = async () => {
+      const response = await fetch("/assets/clean_dem.tif");
+      const arrayBuffer = await response.arrayBuffer();
+      const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
+      const image = await tiff.getImage();
+      const raster = await image.readRasters();
+      const data = raster[0];
+
+      // ✅ Normalize and scale elevation
+      const min = Math.min(...data);
+      const max = Math.max(...data);
+      const normalized = data.map((val) => ((val - min) / (max - min)) * 10); // Scale height to 0–10
+
+      console.log("Elevation data normalized:", normalized);
+      setElevationData(normalized);
+    };
+
+    loadDEM();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <h2 className="text-center text-3xl font-bold py-6">3D DEM Viewer</h2>
+
+      <div className="h-[75vh] bg-gray-800 rounded-xl shadow-inner">
+        <Canvas camera={{ position: [0, 15, 30], fov: 45 }} shadows>
+          <ambientLight intensity={0.5} />
+          <directionalLight
+            castShadow
+            position={[10, 20, 10]}
+            intensity={1.2}
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
+          />
+          <OrbitControls />
+          {elevationData && <TerrainMesh elevation={elevationData} />}
+        </Canvas>
+      </div>
+    </div>
+  );
+};
+
+export default Visualize;

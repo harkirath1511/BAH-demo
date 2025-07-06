@@ -8,7 +8,7 @@ import Upload from './pages/Upload.jsx';
 import Registry from './pages/Registry.jsx';
 import Compare from './pages/Compare.jsx';
 import About from './pages/About.jsx';
-// import Visualize from './pages/Visualize.jsx'
+import Visualize from './pages/Visualize.jsx'
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
           <Route path='registry' element={<Registry />} />
           <Route path='compare' element={<Compare />} />
           <Route path='about' element={<About />} />
-          {/* <Route path='visualize' element={<Visualize />} /> */}
+          <Route path='visualize' element={<Visualize />} />
         </Route>
       </Routes>
     </Router>
