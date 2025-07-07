@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import sfsDEM from "../assets/abc.jpg"; // Replace with your static DEM image
-// import stereoDEM from "../assets/stereo-dem.jpg"; // Replace with your stereo DEM
- // Fake elevation error map
+// Use public directory paths for images
 
 const Compare = () => {
   const [showDiff, setShowDiff] = useState(true);
@@ -26,7 +24,7 @@ const Compare = () => {
         <div className="text-center">
           <h3 className="text-xl font-semibold mb-2">SfS DEM Output</h3>
           <img
-            src={sfsDEM}
+            src="/1.png"
             alt="SfS DEM"
             className="rounded-lg shadow-md max-h-72 border border-gray-700"
           />
@@ -35,7 +33,7 @@ const Compare = () => {
         <div className="text-center">
           <h3 className="text-xl font-semibold mb-2">Stereo DEM Output</h3>
           <img
-            src={'https://www.researchgate.net/profile/Teemu-Oehman/publication/276294107/figure/fig3/AS:667667451105286@1536195733133/A-perspective-view-of-graben-and-central-pit-craters-in-eastern-Alba-Mons-created-with.png'}
+            src="/2.png"
             alt="Stereo DEM"
             className="rounded-lg shadow-md max-h-72 border border-gray-700"
           />

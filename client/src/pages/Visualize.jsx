@@ -90,7 +90,7 @@ const Visualize = () => {
     const loadDEM = async () => {
       try {
         console.log("Loading DEM file...");
-        const response = await fetch("/assets/clean_new_dem.tif");
+        const response = await fetch("/REAL_SFS_DEM_20250707_093901.tif");
         const arrayBuffer = await response.arrayBuffer();
         const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
         const image = await tiff.getImage();
