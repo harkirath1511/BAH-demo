@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // Use public directory paths for images
 
 const Compare = () => {
-  const [showDiff, setShowDiff] = useState(true);
+  const [showDiff, setShowDiff] = useState(false);
 
   return (
     <div className="min-h-screen bg-[url('https://cdn.mos.cms.futurecdn.net/HuGGeENt6kGyixe3hT9tnY.jpg')] bg-cover bg-center bg-no-repeat bg-black/70 bg-blend-darken"
