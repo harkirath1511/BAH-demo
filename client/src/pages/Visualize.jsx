@@ -90,7 +90,7 @@ const Visualize = () => {
     const loadDEM = async () => {
       try {
         console.log("Loading DEM file...");
-        const response = await fetch("/assets/clean_new_dem.tif");
+        const response = await fetch("/assets/abc_new_dem.tif");
         const arrayBuffer = await response.arrayBuffer();
         const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
         const image = await tiff.getImage();
@@ -127,7 +127,7 @@ const Visualize = () => {
         setDataStats({ min, max, mean, range });
 
         // Normalize and scale elevation - keep original approach but with better scaling
-        const heightScale = 5 / range; // Scale so the full range spans 5 units
+        const heightScale = 4 / range; // Scale so the full range spans 5 units
         const normalized = downsampledData.map((val) => (val - min) * heightScale);
 
         console.log("Height scale factor:", heightScale);

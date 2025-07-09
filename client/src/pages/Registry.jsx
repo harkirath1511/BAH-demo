@@ -49,12 +49,12 @@ const Registry = () => {
             key={entry.id}
             className="bg-gray-800 p-6 rounded-lg shadow-md border border-gray-700"
           >
-            <p><strong>SHA-256 Hash:</strong> <span className="text-green-400">{entry.hash}</span></p>
-            <p><strong>IPFS CID:</strong> <span className="text-blue-400">{entry.cid}</span></p>
-            <p><strong>Location:</strong> {entry.location}</p>
-            <p><strong>Azimuth:</strong> {entry.azimuth}</p>
-            <p><strong>Timestamp:</strong> {entry.timestamp}</p>
-            <button className="mt-4 bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded font-semibold">
+            <p className="text-white"><strong>SHA-256 Hash:</strong> <span className="text-green-400">{entry.hash}</span></p>
+            <p className="text-white"><strong>IPFS CID:</strong> <span className="text-blue-400">{entry.cid}</span></p>
+            <p className=" text-white"><strong>Location:</strong> {entry.location}</p>
+            <p className="text-white"><strong>Azimuth:</strong> {entry.azimuth}</p>
+            <p className=" text-white"><strong>Timestamp:</strong> {entry.timestamp}</p>
+            <button className="mt-4 bg-purple-600 text-white hover:bg-purple-700 px-5 py-2 rounded font-semibold">
               View DEM
             </button>
           </div>
