@@ -20,6 +20,27 @@ const Home = () => {
           TMC-1 Based Digital Elevation Model Generation using Shape-from-Shading (SfS), ASP refinement, and IPFS-based DEM Registry.
         </p>
 
+        {/* Caution Section */}
+        <div className="bg-yellow-600 bg-opacity-80 border border-yellow-500 rounded-lg p-4 mb-8 text-black">
+          <h2 className="text-xl font-semibold mb-2 flex items-center justify-center">
+            ⚠️ Important Notice
+          </h2>
+          <p className="text-sm md:text-base mb-3">
+            The QR code provided in the presentation may have expired. If it doesn't work, click the link below to access the SFS algorithm technical documentation and implementation directly.
+          </p>
+          <p className="text-sm md:text-base mb-3">
+            It contains in-depth analysis of the SFS algorithm and can be tested directly with just Docker - no further setup required. Test data is included too.
+          </p>
+          <a
+            href="https://github.com/vaidikcode/SFS-Shape-From-Shading-"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+          >
+            📖 SFS Algorithm Technical Docs & Implementation
+          </a>
+        </div>
+
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Link
             to="/upload"
