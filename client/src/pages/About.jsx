@@ -50,7 +50,7 @@ const About = () => {
 
       {/* Contact or GitHub */}
       <section className="text-center border-t border-gray-700 pt-6 text-gray-400">
-        <p>Project Repository: <a href="https://github.com/yourusername/lunar-dem-platform" target="_blank" rel="noreferrer" className="text-blue-400 underline">GitHub</a></p>
+        <p>Project Repository: <a href="https://github.com/harkirath1511/BAH-demo" target="_blank" rel="noreferrer" className="text-blue-400 underline">GitHub</a></p>
         <p className="mt-1">Contact: contact@example.com</p>
       </section>
     </div>
